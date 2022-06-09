@@ -30,7 +30,7 @@ async function getQuotes(){
     const url='https://type.fit/api/quotes';
     try{
         const resp= await fetch(url);
-        quotes= await Response.json();
+        quotes= await resp.json();
         nextQuote();
         //console.log(quotes);
     } catch(error){
