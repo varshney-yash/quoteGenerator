@@ -8,22 +8,18 @@ const nextQuoteBtn=document.getElementById('next-quote');
 
 let quotes=[];
 
-function nextQuote(){
-    const quote=quotes[Math.floor(Math.random() *  quotes.length)];
-    if(!quote.author){
-        authorText.textContent='Anonymous';
-    }
-    else{
-        authorText.textContent=quote.author;
-    }
-    quoteText.textContent=quote.text;
+function nextQuote() {
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    let author = quote.author || 'Anonymous';
+    author = author.replace(/, type\.fit$/, '');
+    authorText.textContent = author;
+    quoteText.textContent = quote.text;
    
-    if(quote.text>100){
+    if (quote.text.length > 100) {
         quoteText.classList.add('long-text');
-    } else{
-        quoteText.classList.remove('long-text')
+    } else {
+        quoteText.classList.remove('long-text');
     }
-    quoteText.textContent=quote.text;
 }
 
 async function getQuotes(){
@@ -32,7 +28,6 @@ async function getQuotes(){
         const resp= await fetch(url);
         quotes= await resp.json();
         nextQuote();
-        //console.log(quotes);
     } catch(error){
         quotes=localQuotes;
         nextQuote();
